@@ -4,11 +4,15 @@ import styles from './Flag.module.css'
 export default function Flag() {
     const [countries, setCountries] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
+    const [loading, setLoading] = useState(true); // Add loading state
 
     useEffect(() => {
         fetch("https://restcountries.com/v3.1/all")
             .then((res) => res.json())
-            .then((data) => setCountries(data))
+            .then((data) => {
+                setCountries(data);
+                setLoading(false); // Data loading complete
+            })
             .catch((err) => console.error("error from data:", err))
     }, [])
 
@@ -19,6 +23,10 @@ export default function Flag() {
     const filteredCountries = countries.filter((country) =>
         country.name.common.toLowerCase().includes(searchQuery)
     );
+
+    if (loading) {
+        return <div>Loading...</div>; // Show loading indicator
+    }
 
     return (
         <>
@@ -45,4 +53,5 @@ export default function Flag() {
         </>
     )
 }
+
 
