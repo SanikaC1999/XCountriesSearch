@@ -1,0 +1,27 @@
+.App {
+  font-family: sans-serif;
+  text-align: center;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.countrys {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 20px;
+  border: 1px solid grey;
+  border-radius: 10px;
+  padding: 10px;
+  height: 120px;
+}
+
+img {
+  height: 100px;
+  width: 100px;
+}
+
+h6 {
+  width: 100px;
+}
