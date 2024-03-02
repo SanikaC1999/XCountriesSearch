@@ -30,7 +30,7 @@ export default function Flag() {
                 placeholder="Search for a country"
                 onChange={handleSearch}
             />
-            <div className={styles.main}>
+            <div className={styles.countryCard}>
                 {filteredCountries.map((country) => (
                     <div key={country.cca3} className={styles.wrapper}>
                         {country.flags && country.flags.png &&
