@@ -3,25 +3,22 @@ import styles from './Flag.module.css'
 
 export default function Flag() {
     const [countries, setCountries] = useState([]);
-    const [filteredCountries, setFilteredCountries] = useState([]);
+    const [searchQuery, setSearchQuery] = useState('');
 
     useEffect(() => {
         fetch("https://restcountries.com/v3.1/all")
             .then((res) => res.json())
-            .then((data) => {
-                setCountries(data);
-                setFilteredCountries(data);
-            })
+            .then((data) => setCountries(data))
             .catch((err) => console.error("error from data:", err))
     }, [])
 
     const handleSearch = (event) => {
-        const searchValue = event.target.value.toLowerCase();
-        const filteredCountries = countries.filter((country) =>
-            country.name.common.toLowerCase().includes(searchValue)
-        );
-        setFilteredCountries(filteredCountries);
+        setSearchQuery(event.target.value.toLowerCase());
     };
+
+    const filteredCountries = countries.filter((country) =>
+        country.name.common.toLowerCase().includes(searchQuery)
+    );
 
     return (
         <>
@@ -48,3 +45,4 @@ export default function Flag() {
         </>
     )
 }
+
