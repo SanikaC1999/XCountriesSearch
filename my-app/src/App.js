@@ -1,40 +1,43 @@
-import './App.css';
+import React, { useEffect, useState } from "react";
+import styles from './Flag.module.css'
 
-import { useEffect, useState } from "react";
+export default function Flag (){
+    const [countries,setCountries] = useState([]);
 
-export default function App() {
-  const [countries, setCountries] = useState([]);
+    useEffect(()=>{
+        fetch("https://restcountries.com/v3.1/all")
+        .then((res)=>res.json())
+        .then((data)=>setCountries(data))
+        .catch((err)=>console.error("error from data:",err))
+    },[])
 
-  useEffect(() => {
-    fetch("https://restcountries.com/v2/all")
-      .then((res) => res.json())
-      .then((data) => setCountries(data))
-      .catch((error) => console.log(error));
-  }, []);
+    const handleSearch = (event) => {
+      const searchValue = event.target.value.toLowerCase();
+      const filteredCountries = countries.filter((country) =>
+        country.name.common.toLowerCase().includes(searchValue)
+      );
+      setCountries(filteredCountries);
+    };
+    
 
-  const handleSearch = (event) => {
-    const searchValue = event.target.value;
-    const filteredCountries = countries.filter((country) =>
-      country.name.toLowerCase().includes(searchValue.toLowerCase())
-    );
-    setCountries(filteredCountries);
-  };
-
-  return (
-    <>
-      <input
+    return (
+      <>
+        <input
         type="text"
         placeholder="Search for a country"
         onChange={handleSearch}
       />
-      <div className="App">
-        {countries.map((country) => (
-          <div className="countrys" key={country.name}>
-            <img src={country.flags.png} alt={country.name} />
-            <h6>{country.name}</h6>
-          </div>
-        ))}
-      </div>
-    </>
-  );
+        <div className={styles.main}>
+    {countries.map((country) => (
+        <div key={country.cca3} className={styles.wrapper}>
+            <img 
+                src={country.flags.png}
+                alt={`Flag of ${country.name.common}`}
+                className={styles.imgFlag} />
+            <h2 className={styles.heading}>{country.name.common}</h2>    
+        </div>
+    ))}
+        </div>
+        </>
+    )
 }
