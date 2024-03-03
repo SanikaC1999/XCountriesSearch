@@ -1,54 +1,53 @@
-import React, { useEffect, useState } from "react";
-import './Flag.css'
+import "./App.css";
+import React, { useState, useEffect } from "react";
 
-export default function Flag() {
-    const [countries, setCountries] = useState([]);
-    const [searchQuery, setSearchQuery] = useState('');
+function App() {
+  const [countries, setCountries] = useState([]);
+  const [search, setSearch] = useState("");
+  const handleSearch = (e) => {
+    setSearch(e.target.value);
+  };
 
-    useEffect(() => {
-        fetch("https://restcountries.com/v3.1/all")
-            .then((res) => res.json())
-            .then((data) => {
-                setCountries(data);
-            })
-            .catch((err) => console.error("error from data:", err))
-    }, [])
-
-    const handleSearch = (event) => {
-        setSearchQuery(event.target.value.toLowerCase());
-    };
-
-    const filteredCountries = countries.filter((country) =>
-        country.name.common.toLowerCase().includes(searchQuery)
-    );
-    console.log(filteredCountries)
-
-    return (
-        <>
-            <input
-                type="text"
-                placeholder="Search for a country"
-                onChange={handleSearch}
-                className="inputFeild"
+  useEffect(() => {
+    fetch("https://restcountries.com/v3.1/all")
+      .then((response) => response.json())
+      .then((data) => setCountries(data))
+      .catch((error) => console.error("Error to Fetch the data", error));
+  }, []);
+  return (
+<div className="App">
+      <input
+        type="text"
+        placeholder="Search for Countries"
+        className="search-bar"
+        onChange={handleSearch}
+        value={search}
+      />
+      <div className="card-container">
+        {countries.map((items) => {
+         const countryName = items.name.common.toLowerCase();
+          const searchName = search.toLowerCase();
+            if(!countryName.includes(searchName) && searchName ){
+              return null;
+            }
+return (
+          <div key={items.cca3} className="countryCard">
+            <img
+              src={items.flags.png}
+              alt={items.name.common}
+              className="flag"
             />
-            <div className="countryCard">
-                {filteredCountries.map((country) => (
-                    <div key={country.cca3}>
-                        {country.flags && country.flags.png &&
-                            <img
-                                src={country.flags.png}
-                                alt={`Flag of ${country.name.common}`}
-                             />
-                        }
-                        {country.name &&
-                            <h2>{country.name.common}</h2>
-                        }
-                    </div>
-                ))}
-            </div>
-        </>
-    )
+            <h2>{items.name.common}</h2>
+          </div>
+            )
+            })}
+
+      </div>
+    </div>
+  );
 }
+
+export default App;
 
 
 
