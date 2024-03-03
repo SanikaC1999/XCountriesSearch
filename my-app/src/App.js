@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import styles from './Flag.module.css'
+import './Flag.css'
 
 export default function Flag() {
     const [countries, setCountries] = useState([]);
@@ -35,19 +35,19 @@ export default function Flag() {
                 type="text"
                 placeholder="Search for a country"
                 onChange={handleSearch}
-                className={styles.inputFeild}
+                className="inputFeild"
             />
-            <div className={styles.countryCard}>
+            <div className="countryCard">
                 {filteredCountries.map((country) => (
-                    <div key={country.cca3} className={styles.countryCard}>
+                    <div key={country.cca3}>
                         {country.flags && country.flags.png &&
                             <img
                                 src={country.flags.png}
                                 alt={`Flag of ${country.name.common}`}
-                                className={styles.countryCard} />
+                             />
                         }
                         {country.name &&
-                            <h2 className={styles.countryCard}>{country.name.common}</h2>
+                            <h2>{country.name.common}</h2>
                         }
                     </div>
                 ))}
