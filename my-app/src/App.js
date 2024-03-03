@@ -20,17 +20,20 @@ export default function Flag() {
     }, [])
 
     const handleSearch = (event) => {
-        setSearchQuery(event.target.value.toLowerCase());
-
+        const query = event.target.value.toLowerCase();
+        setSearchQuery(query);
+    
         // Debounce the filtering function
         clearTimeout(debounceTimer);
         debounceTimer = setTimeout(() => {
-            const filteredCountries = countries.filter(country =>
-                country.name.common.toLowerCase().includes(searchQuery)
+            setFilteredCountries(prevCountries =>
+                prevCountries.filter(country =>
+                    country.name.common.toLowerCase().includes(query)
+                )
             );
-            setFilteredCountries(filteredCountries);
         }, debounceDelay);
     };
+    
     useEffect(() => {
         // When the search query is empty, display all countries
         if (searchQuery === '') {
