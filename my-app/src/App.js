@@ -4,14 +4,15 @@ import styles from './Flag.module.css'
 export default function Flag() {
     const [countries, setCountries] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
-    const [loading, setLoading] = useState(true); // Add loading state
+    const [loading, setLoading] = useState(true); 
+    const newVar = false
 
     useEffect(() => {
         fetch("https://restcountries.com/v3.1/all")
             .then((res) => res.json())
             .then((data) => {
                 setCountries(data);
-                setLoading(false); // Data loading complete
+                setLoading(false); 
             })
             .catch((err) => console.error("error from data:", err))
     }, [])
@@ -25,7 +26,7 @@ export default function Flag() {
     );
 
     if (loading) {
-        return <div>Loading...</div>; // Show loading indicator
+        return <div>Loading...</div>; 
     }
 
     return (
@@ -34,6 +35,7 @@ export default function Flag() {
                 type="text"
                 placeholder="Search for a country"
                 onChange={handleSearch}
+                className={styles.inputFeild}
             />
             <div className={styles.countryCard}>
                 {filteredCountries.map((country) => (
