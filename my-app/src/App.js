@@ -37,15 +37,15 @@ export default function Flag() {
             />
             <div className={styles.countryCard}>
                 {filteredCountries.map((country) => (
-                    <div key={country.cca3} className={styles.wrapper}>
+                    <div key={country.cca3} className={styles.countryCard}>
                         {country.flags && country.flags.png &&
                             <img
                                 src={country.flags.png}
                                 alt={`Flag of ${country.name.common}`}
-                                className={styles.imgFlag} />
+                                className={styles.countryCard} />
                         }
                         {country.name &&
-                            <h2 className={styles.heading}>{country.name.common}</h2>
+                            <h2 className={styles.countryCard}>{country.name.common}</h2>
                         }
                     </div>
                 ))}
